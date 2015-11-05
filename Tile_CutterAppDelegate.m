@@ -43,7 +43,7 @@
     return YES;
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification 
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSColor *guideColor = [defaults colorForKey:@"guideColor"];
@@ -60,9 +60,16 @@
 - (void)saveThread
 {
     NSLog(@"Save thread started");
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; 
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     NSImage *image = [[[NSImage alloc] initWithContentsOfFile:tileCutterView.filename] autorelease];
+    NSLog(@"%@", tileCutterView.filename);
+    NSLog(@"image size %f, %f", image.size.width, image.size.height);
+    
+    
+    // BH edit (fixes representation bug)
+    NSImageRep *rep = [[image representations] objectAtIndex:0];
+    NSSize imageSize = NSMakeSize(rep.pixelsWide, rep.pixelsHigh);
     
     [rowBar setIndeterminate:NO];
     [columnBar setIndeterminate:NO];
